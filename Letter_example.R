@@ -30,6 +30,12 @@ plot(out$error_test, type = 'o', main = "Testing Error", xlab = "Iteration", yla
 # Feel free to modify the code above for different lambda/eta/numIter values to see how it affects the convergence as well as train/test errors
 
 # [ToDo] Use microbenchmark to time your code with lambda=1 and 50 iterations. To save time, only apply microbenchmark 5 times.
+library(microbenchmark)
+
+timing <- microbenchmark(
+  LRMultiClass(X, Y, Xt, Yt, numIter = 50, lambda = 1),
+  times = 5
+)
 
 # [ToDo] Report the median time of your code from microbenchmark above in the comments below
 
