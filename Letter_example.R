@@ -20,7 +20,7 @@ Xt <- cbind(1, Xt)
 source("FunctionsLR.R")
 
 # [ToDo] Try the algorithm LRMultiClass with lambda = 1 and 50 iterations. Call the resulting object out, i.e. out <- LRMultiClass(...)
-
+out <- LRMultiClass(X, Y, Xt, Yt, numIter = 50, lambda = 1)
 
 # The code below will draw pictures of objective function, as well as train/test error over the iterations
 plot(out$objective, type = 'o')
