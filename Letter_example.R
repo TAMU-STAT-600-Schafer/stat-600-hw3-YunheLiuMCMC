@@ -23,9 +23,9 @@ source("FunctionsLR.R")
 out <- LRMultiClass(X, Y, Xt, Yt, numIter = 50, lambda = 1)
 
 # The code below will draw pictures of objective function, as well as train/test error over the iterations
-plot(out$objective, type = 'o')
-plot(out$error_train, type = 'o')
-plot(out$error_test, type = 'o')
+plot(out$objective, type = 'o', main = "Objective Function", xlab = "Iteration", ylab = "Objective Value")
+plot(out$error_train, type = 'o', main = "Training Error", xlab = "Iteration", ylab = "Error Rate (%)")
+plot(out$error_test, type = 'o', main = "Testing Error", xlab = "Iteration", ylab = "Error Rate (%)")
 
 # Feel free to modify the code above for different lambda/eta/numIter values to see how it affects the convergence as well as train/test errors
 
