@@ -61,6 +61,29 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
     beta <- beta_init
   }
   
+  #Define some useful functions
+  # Helper function to calculate probabilities
+  calc_probs <- function(X, beta) {
+    exp_Xbeta <- exp(X %*% beta)
+    probs <- exp_Xbeta / rowSums(exp_Xbeta)
+    return(probs)
+  }
+  
+  # Helper function to calculate objective
+  calc_objective <- function(X, y, lambda, beta) {
+    P = calc_probs(X, beta)
+    return( - sum(log(P[cbind(1:nrow(X), y + 1)])) + 0.5 * lambda * sum(beta^2))
+  }
+  
+  # Helper function to calculate error rate
+  calc_error <- function(X, y, beta) {
+    probs <- calc_probs(X, beta)
+    predicted_class <- max.col(probs) - 1
+    error_rate <- mean(predicted_class != y) * 100
+    return(error_rate)
+  }
+  
+  
   ## Calculate corresponding pk, objective value f(beta_init), training error and testing error given the starting point beta_init
   ##########################################################################
   
