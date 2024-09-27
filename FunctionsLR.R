@@ -98,7 +98,22 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
   ##########################################################################
  
   # Within one iteration: perform the update, calculate updated objective function and training/testing errors in %
-  
+  for (i in 1:numIter) { 
+    P = calc_probs(X, beta)
+    for (j in 1:K) { 
+      P_k = P[, j]
+      # computes gradient
+      grad = t(X) %*% (P[, j] - (1 * (y == (j - 1)))) + lambda * beta[, j]
+      # computes Hessian
+      W = sqrt(P_k * (1 - P_k))
+      H = t(X * W) %*% (X * W) + lambda * diag(p)
+      beta[, j] = beta[, j] - eta * solve(H) %*% grad
+      # updates beta_k according to the damped Newton's method
+    }
+    objective[i + 1] = calc_objective(X, y, lambda, beta)
+    error_train[i + 1] = calc_error(X, y, beta)
+    error_test[i + 1] = calc_error(Xt, yt, beta)
+  }
   
   ## Return output
   ##########################################################################
