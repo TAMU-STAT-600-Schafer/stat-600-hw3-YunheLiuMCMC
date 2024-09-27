@@ -25,18 +25,41 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
   K = length(unique(y)) 
   
   # Check that the first column of X and Xt are 1s, if not - display appropriate message and stop execution.
-  
+  if (!all(X[, 1] == 1)) {
+    stop("First column of X should be 1s.") 
+  }
+  if (!all(Xt[, 1] == 1)) {
+    stop("First column of Xt should be 1s.") 
+  }
   # Check for compatibility of dimensions between X and Y
-  
+  if (length(y) != n) {
+    stop("The number of rows of X should be the same as the length of y.") 
+  }
   # Check for compatibility of dimensions between Xt and Yt
-  
+  if (length(yt) != nrow(Xt)) {
+    stop("The number of rows of Xt should be the same as the length of yt.") 
+  }
   # Check for compatibility of dimensions between X and Xt
-  
+  if (ncol(X) != ncol(Xt)) {
+    stop("The number of columns in X should be the same as the number of columns in Xt.") 
+  }
   # Check eta is positive
-  
+  if (eta <= 0) {
+    stop("The learning rate eta should be positive.")
+  }
   # Check lambda is non-negative
-  
+  if (lambda < 0) {
+    stop("The ridge parameter lambda should be non-negative.")
+  }
   # Check whether beta_init is NULL. If NULL, initialize beta with p x K matrix of zeroes. If not NULL, check for compatibility of dimensions with what has been already supplied.
+  if (is.null(beta_init)) {
+    beta <- matrix(0, p, K)
+  } else {
+    if (nrow(beta_init) != p | ncol(beta_init) != K) {
+      stop("The dimensions of beta_init supplied are not correct.")
+    }
+    beta <- beta_init
+  }
   
   ## Calculate corresponding pk, objective value f(beta_init), training error and testing error given the starting point beta_init
   ##########################################################################
