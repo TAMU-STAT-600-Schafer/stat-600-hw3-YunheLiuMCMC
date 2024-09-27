@@ -40,3 +40,5 @@ timing <- microbenchmark(
 # [ToDo] Report the median time of your code from microbenchmark above in the comments below
 
 # Median time:  (in sec)
+cat("Median time:", median(timing$time) / 1e9, "seconds\n")
+# Median time: 1.20 (in sec), with Apple M2 Pro.
